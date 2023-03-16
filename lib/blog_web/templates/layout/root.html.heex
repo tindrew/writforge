@@ -11,20 +11,25 @@
   </head>
   <body>
     <header>
-      <section class="container">
-        <nav>
-          <ul>
-            <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
-            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-              <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
-            <% end %>
-          </ul>
+      <section>
+        <nav class="flex bg-gray-400 w-full h-24 ">
+          <logo class="flex h-20 w-24  pl-4 self-center">
+          <img src={Routes.static_path(@conn, "/images/writforge.png")} alt="writforge logo"/>
+          </logo>  
+          WritForge
         </nav>
-        <a href="https://phoenixframework.org/" class="phx-logo">
-          <img src={Routes.static_path(@conn, "/images/phoenix.png")} alt="Phoenix Framework Logo"/>
-        </a>
+        
+    
       </section>
     </header>
     <%= @inner_content %>
   </body>
 </html>
+
+<!--Base
+<a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
+            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
+              <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
+            <% end %>
+          </ul>
+          -->
