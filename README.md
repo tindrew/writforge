@@ -16,7 +16,7 @@ Here are some of the features that make WritForge easy to use:
 
 Collaborators: 
 <a href="https://github.com/0xmohsinpathan">Mohsin</a>
-<a href="https://github.com/johnhitz203"johnhitz203>John Hitz</a>
+<a href="https://github.com/johnhitz203">John Hitz</a>
 
  
 
