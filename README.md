@@ -12,11 +12,11 @@ Here are some of the features that make WritForge easy to use:
 
 - Idea: [ Projects: Our projects feature allows you to collaborate with other writers on a shared writing project. Whether you're co-authoring a novel, working on a screenplay, or just looking for feedback on your work, our projects feature makes it easy to work together. ]
 
-- Writing tools: We offer a variety of writing tools to help you improve your craft. From grammar and style checkers to writing prompts and exercises, our tools are designed to make writing easier and more enjoyable.
+- Writing tools: We offer a variety of writing tools to help you improve your craft. Our tools are designed to make writing easier and more enjoyable.
 
 Collaborators: 
-0xmohsinpathan
-johnhitz203
+<a href="https://github.com/0xmohsinpathan">Mohsin</a>
+<a href="https://github.com/johnhitz203"johnhitz203>John Hitz</a>
 
  
 
