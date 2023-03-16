@@ -14,6 +14,9 @@ Here are some of the features that make WritForge easy to use:
 
 - Writing tools: We offer a variety of writing tools to help you improve your craft. From grammar and style checkers to writing prompts and exercises, our tools are designed to make writing easier and more enjoyable.
 
+Collaborators: 
+0xmohsinpathan
+johnhitz203
 
  
 
