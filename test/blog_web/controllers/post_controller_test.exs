@@ -4,7 +4,11 @@ defmodule BlogWeb.PostControllerTest do
   import Blog.PostsFixtures
 
   @create_attrs %{content: "some content", subtitle: "some subtitle", title: "some title"}
-  @update_attrs %{content: "some updated content", subtitle: "some updated subtitle", title: "some updated title"}
+  @update_attrs %{
+    content: "some updated content",
+    subtitle: "some updated subtitle",
+    title: "some updated title"
+  }
   @invalid_attrs %{content: nil, subtitle: nil, title: nil}
 
   describe "index" do
