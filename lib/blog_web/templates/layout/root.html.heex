@@ -13,13 +13,11 @@
     <header>
       <section>
         <nav class="flex bg-gray-400 w-full h-24 ">
-          <logo class="flex h-20 w-24  pl-4 self-center">
-          <img src={Routes.static_path(@conn, "/images/writforge.png")} alt="writforge logo"/>
-          </logo>  
+          <logo class="flex h-20 w-24  pl-4  self-center">
+           <a href={Routes.page_path(@conn, :index)}> <img src={Routes.static_path(@conn, "/images/writforge.png")} alt="writforge logo"/></a>
+          </logo>
           WritForge
         </nav>
-        
-    
       </section>
     </header>
     <%= @inner_content %>
