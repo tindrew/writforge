@@ -23,20 +23,20 @@
     </tr>
   </thead>
   <tbody>
-<%= for post <- @posts do %>
+  <%= for post <- @posts do %>
     <tr>
-      <td><%= post.title %></td>
-      <td><%= post.subtitle %></td>
-      <td><%= post.content %></td>
+      <td class="px-20"><%= post.title %></td>
+      <td class="px-20"><%= post.subtitle %></td>
+      <td class="px-20"><%= post.content %></td>
 
       <td>
-        <span><%= link "Show", to: Routes.post_path(@conn, :show, post) %></span>
-        <span><%= link "Edit", to: Routes.post_path(@conn, :edit, post) %></span>
-        <span><%= link "Delete", to: Routes.post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"] %></span>
+        <span class="p-1"><%= link "Show", to: Routes.post_path(@conn, :show, post) %></span>
+        <span class="p-1"><%= link "Edit", to: Routes.post_path(@conn, :edit, post) %></span>
+        <span class="p-1"><%= link "Delete", to: Routes.post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"] %></span>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
 
-<span><%= link "New Post", to: Routes.post_path(@conn, :new) %></span>
+<span class="p-20 py-5"><%= link "New Post", to: Routes.post_path(@conn, :new) %></span>

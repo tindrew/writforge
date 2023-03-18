@@ -23,7 +23,7 @@ defmodule Blog.Posts do
 
     query =
       from p in Post,
-        where: ilike(p.title, ^post_title)
+        where: ilike(p.title, ^post_title) or ilike(p.subtitle, ^post_title) or ilike(p.content, ^post_title)
 
     Repo.all(query)
   end
