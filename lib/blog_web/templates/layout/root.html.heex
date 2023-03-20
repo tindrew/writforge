@@ -12,12 +12,14 @@
   <body>
     <header>
       <section>
-        <nav class="relative flex w-full items-center justify-between bg-gray-200 h-18 ">
+        <nav class=" container relative flex w-9/12  items-center bg-gray-200 h-18 ">
           <logo class="flex h-18 w-24  pl-4  self-center">
            <a href={Routes.page_path(@conn, :index)}> <img src={Routes.static_path(@conn, "/images/writforge.png")} class="h-16 w-16 p-1" alt="writforge logo"/></a>
-          </logo>
-          <nav-links class="flex bg-red-500 py-2 ">
-            <Components.link href="/home">Home</Components.link>
+          </logo> 
+          <h2>WritForge</h2>
+          <nav-links class="flex  bg-red-500">
+            <Components.link href={Routes.page_path(@conn, :index)}>Home</Components.link>
+            <Components.link href="/posts">Posts</Components.link>
             <Components.link href="/about">About</Components.link>
             <Components.link href="/log-in">Log In</Components.link>
           </nav-links>

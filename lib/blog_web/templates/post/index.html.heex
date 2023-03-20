@@ -15,7 +15,7 @@
     <tr>
       <th>Title</th>
     
-      <th>Subtitle</th>
+      <th>Published on</th>
       
       <th>Content</th>
 
@@ -26,7 +26,7 @@
   <%= for post <- @posts do %>
     <tr>
       <td class="px-20"><%= post.title %></td>
-      <td class="px-20"><%= post.subtitle %></td>
+      <td class="px-20"><%= Calendar.strftime(post.published_on, "%B %-d, %Y") %></td>
       <td class="px-20"><%= post.content %></td>
 
       <td>
