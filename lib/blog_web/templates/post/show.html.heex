@@ -8,13 +8,18 @@
   </li>
 
   <li>
-    <strong>Subtitle:</strong>
-    <%= @post.subtitle %>
+    <strong>Published On:</strong>
+    <%=  Calendar.strftime(@post.published_on, "%B %-d, %Y") %>
   </li>
 
   <li>
     <strong>Content:</strong>
     <%= @post.content %>
+  </li>
+
+  <li>
+    <strong>Visible:</strong>
+    <%= @post.visible %>
   </li>
 
 </ul>

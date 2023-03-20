@@ -9,13 +9,17 @@
   <%= text_input f, :title %>
   <%= error_tag f, :title %>
 
-  <%= label f, :subtitle %>
-  <%= text_input f, :subtitle %>
-  <%= error_tag f, :subtitle %>
+  <%!-- <%= label f, :published_on %>
+  <%= date_input f, :published_on %> --%>
+  <%!-- <%= error_tag f, :published_on %> --%>
 
   <%= label f, :content %>
   <%= textarea f, :content %>
   <%= error_tag f, :content %>
+
+  <%= label f, :visible %>
+  <%= checkbox f, :visible, checked: "checked" %>
+  <%= error_tag f, :visible %>
 
   <div>
     <%= submit "Save" %>
