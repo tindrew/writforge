@@ -9,14 +9,46 @@
     </div>
   </.form>
 
+<!--div class="relative bg-cover bg-no-repeat bg-right opacity-50 h-96 w-1/4 rounded-lg shadow-lg overflow-hidden bg- text-center" style="background-image: url('/images/typewriter-brown.jpg')"-->
+
+<div class="">
+  <%= for post <- @posts do %>
+    <div class="bg-gray-200 h-96 w-1/4  rounded-lg shadow-lg">
+      <header class="flex justify-between h-20 w-full">
+        <div class="h-20 w-30 m-2">
+          <!--img src={Routes.static_path(@conn, "/images/writforge.png")} class="h-16 w-16 p-1" alt="writforge logo"/-->
+          <img src={Routes.static_path(@conn, "/images/writforge.png")} class="flex justify-center self-center h-16 w-16" alt="Writforge logo"/>
+        </div>
+        <div class="flex flex-col justify-center ml-5 w-full h-3/4">
+          <div class="font-bold text-xl"><%= post.title %></div>
+          <div class=""><%= post.subtitle %></div>
+        </div>
+      </header>
+
+      <article class="flex justify-center relative text-gray-50 h-64 overflow-auto" style="background-image: url('/images/typewriter-brown.jpg')">
+        <div class="absolute">
+          <div class="flex justify-center px-5 pt-5">
+            <%= post.content %>
+          </div>
+        </div>
+      </article>
+      <footer class="bg-gray-200 text-gray-900  h-20 w-full p-2">
+        <span class="p-1 hover:text-gray-600"><%= link "Show", to: Routes.post_path(@conn, :show, post) %></span>
+        <span class="p-1 hover:text-gray-600"><%= link "Edit", to: Routes.post_path(@conn, :edit, post) %></span>
+        <span class="p-1 hover:text-red-600"><%= link "Delete", to: Routes.post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </footer>
+    </div>
+  <% end %>
+</div>
+
 
 <table>
   <thead>
     <tr>
       <th>Title</th>
-    
+
       <th>Subtitle</th>
-      
+
       <th>Content</th>
 
       <th></th>
