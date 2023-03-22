@@ -12,18 +12,16 @@
   <body>
     <header>
       <section>
-        <nav class=" container relative flex w-9/12  items-center bg-gray-200 h-18 ">
-          <logo class="flex h-18 w-24  pl-4  self-center">
-           <a href={Routes.page_path(@conn, :index)}> <img src={Routes.static_path(@conn, "/images/writforge.png")} class="h-16 w-16 p-1" alt="writforge logo"/></a>
-          </logo> 
-          <h2>WritForge</h2>
-          <nav-links class="flex  bg-red-500">
-            <Components.link href={Routes.page_path(@conn, :index)}>Home</Components.link>
-            <Components.link href="/posts">Posts</Components.link>
-            <Components.link href="/about">About</Components.link>
-            <Components.link href="/log-in">Log In</Components.link>
-          </nav-links>
-        </nav>
+          <nav class="bg-gray-800 flex justify-between items-center px-8 py-8" style=" position: fixed; top: 0; left: 0; right: 0; z-index: 999; box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.7);">
+            <a href={Routes.page_path(@conn, :index)} class="flex items-center">
+              <img src={Routes.static_path(@conn, "/images/writforge.png")} class="h-16 w-16 mr-2" alt="writforge Logo"/>
+            </a>
+            <div class="flex gap-6">
+              <a href={Routes.page_path(@conn, :index)} class="text-white hover:bg-gray-600 py-2 px-3 rounded-lg transition-all duration-300">Home</a>
+              <a href="/posts" class="text-white hover:bg-gray-600 py-2 px-3 rounded-lg transition-all duration-300">Posts</a>
+              <a href="/about" class="text-white hover:bg-gray-600 py-2 px-3 rounded-lg transition-all duration-300">About</a>
+            </div>
+          </nav>
       </section>
     </header>
     <%= @inner_content %>
@@ -37,3 +35,14 @@
             <% end %>
           </ul>
           -->
+
+          <%!-- <nav>
+          <logo class="flex pl-4  self-center">
+           <a href={Routes.page_path(@conn, :index)}> <img src={Routes.static_path(@conn, "/images/writforge.png")} class="h-16 w-16 p-1" alt="writforge logo"/></a>
+          </logo>
+        <div id="links-container">
+        <Components.link class="bg" href={Routes.page_path(@conn, :index)}>Home</Components.link>
+        <Components.link href="/posts">Posts</Components.link>
+        <Components.link href="/about">About</Components.link>
+      </div>
+    </nav> --%>
