@@ -1,4 +1,5 @@
 defmodule BlogWeb.Router do
+
   use BlogWeb, :router
 
   pipeline :browser do
@@ -18,6 +19,7 @@ defmodule BlogWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+
 
     resources "/posts", PostController
   end

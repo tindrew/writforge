@@ -2,7 +2,9 @@ defmodule BlogWeb.PostController do
   use BlogWeb, :controller
   use Ecto.Schema
 
-
+  alias Blog.Comments
+  alias Blog.Comments.Comment
+  #alias Floki.HTMLTree.Comment
   alias Blog.Posts
   alias Blog.Posts.Post
 
@@ -19,12 +21,17 @@ defmodule BlogWeb.PostController do
   end
 
 
+
   def new(conn, _params) do
     changeset = Posts.change_post(%Post{})
+    # comment_changeset = Comments.change_comment(%Comment{})
     render(conn, "new.html", changeset: changeset)
   end
 
+  #comment_changeset: comment_changeset
+
   def create(conn, %{"post" => post_params}) do
+    IO.inspect(post_params, label: "WTF? Over!")
     case Posts.create_post(post_params) do
       {:ok, post} ->
         conn
@@ -36,9 +43,28 @@ defmodule BlogWeb.PostController do
     end
   end
 
+  def create_comment(conn, %{"comment" => comment_params}) do
+    IO.inspect(conn, label: "DAFAQ")
+    case Comments.create_comment(comment_params) do
+      {:ok, comment} ->
+      conn
+      |> IO.inspect(label: "Hard Knocks!")
+      |> put_flash(:info, "comment created argumentatively")
+      |> redirect(to: Routes.post_path(conn, :show, comment))
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        render(conn, "new.html", changeset: changeset)
+    end
+  end
+
+
   def show(conn, %{"id" => id}) do
+    comment_changeset = Comments.change_comment(%Comment{})
+
+
     post = Posts.get_post!(id)
-    render(conn, "show.html", post: post)
+    comments = Comments.list_comments()
+    render(conn, "show.html", post: post, comments: comments, comment_changeset: comment_changeset)
   end
 
   def edit(conn, %{"id" => id}) do
@@ -69,4 +95,8 @@ defmodule BlogWeb.PostController do
     |> put_flash(:info, "Post deleted successfully.")
     |> redirect(to: Routes.post_path(conn, :index))
   end
+
+
+
+
 end
