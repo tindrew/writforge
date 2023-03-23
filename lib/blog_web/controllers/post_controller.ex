@@ -31,14 +31,14 @@ defmodule BlogWeb.PostController do
   #comment_changeset: comment_changeset
 
   def create(conn, %{"post" => post_params}) do
-    IO.inspect(post_params, label: "WTF? Over!")
     case Posts.create_post(post_params) do
       {:ok, post} ->
-        conn
+        IO.inspect(conn, label: "*********** WTF? Over! ***************")
         |> put_flash(:info, "Post created successfully.")
         |> redirect(to: Routes.post_path(conn, :show, post))
 
       {:error, %Ecto.Changeset{} = changeset} ->
+        IO.inspect(changeset, label: "Come On Fucker")
         render(conn, "new.html", changeset: changeset)
     end
   end
@@ -59,12 +59,12 @@ defmodule BlogWeb.PostController do
 
 
   def show(conn, %{"id" => id}) do
-    comment_changeset = Comments.change_comment(%Comment{})
+    changeset = Comments.change_comment(%Comment{})
 
 
     post = Posts.get_post!(id)
     comments = Comments.list_comments()
-    render(conn, "show.html", post: post, comments: comments, comment_changeset: comment_changeset)
+    render(conn, "show.html", post: post, comments: comments, changeset: changeset)
   end
 
   def edit(conn, %{"id" => id}) do

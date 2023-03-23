@@ -27,9 +27,9 @@
 <span><%= link "Edit", to: Routes.post_path(@conn, :edit, @post) %></span> |
 <span><%= link "Back", to: Routes.post_path(@conn, :index) %></span>
 
-<.form let={f} for={@comment_changeset} action={@action}>
-    <% IO.inspect(@comment_changeset) %>
-  <%= if @comment_changeset.action do %>
+<.form let={f} for={@changeset} action={Routes.post_path(@conn, :create_comment)}>
+    <% IO.inspect(@changeset) %>
+  <%= if @changeset.action do %>
     <div class="alert alert-danger">
       <p>Oops, something went wrong! Please check the errors below.</p>
     </div>
@@ -39,6 +39,7 @@
   <%= text_input f, :comment %>
   <%= error_tag f, :comment %>
 
+    
   <div>
     <%= submit "Save" %>
   </div>

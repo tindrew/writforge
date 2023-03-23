@@ -20,7 +20,7 @@ defmodule BlogWeb.Router do
 
     get "/", PageController, :index
 
-
+    post "/posts/:id", PostController, :create_comment
     resources "/posts", PostController
   end
 
