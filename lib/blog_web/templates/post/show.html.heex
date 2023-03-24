@@ -14,20 +14,30 @@
 
   <li>
     <strong>Content:</strong>
-    <%= @post.content %>
+    <%= assigns.post.content %>
   </li>
 
   <li>
     <strong>Visible:</strong>
     <%= @post.visible %>
   </li>
+</ul>
 
+<ul>
+  <strong>COMMENTS:</strong>
+  <%= for comment <- @post.comments do %>
+
+  <li>
+    <%= comment.content %>
+  </li>
+    <% end %>
 </ul>
 
 <span><%= link "Edit", to: Routes.post_path(@conn, :edit, @post) %></span> |
 <span><%= link "Back", to: Routes.post_path(@conn, :index) %></span>
 
-<.form let={f} for={@changeset} action={Routes.post_path(@conn, :create_comment)}>
+<.form let={f} for={@changeset} action={Routes.post_path(@conn, :create_comment, @post.id)}>
+  <%!-- action={"/posts/#{@post.id}"} --%>
     <% IO.inspect(@changeset) %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
@@ -36,11 +46,14 @@
   <% end %>
 
   <%= label f, :comment %>
-  <%= text_input f, :comment %>
-  <%= error_tag f, :comment %>
+  <%= text_input f, :content %>
+  <%= error_tag f, :content %>
 
     
   <div>
     <%= submit "Save" %>
   </div>
 </.form>
+
+
+

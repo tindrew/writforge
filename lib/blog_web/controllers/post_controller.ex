@@ -38,19 +38,20 @@ defmodule BlogWeb.PostController do
         |> redirect(to: Routes.post_path(conn, :show, post))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        IO.inspect(changeset, label: "Come On Fucker")
+
         render(conn, "new.html", changeset: changeset)
     end
   end
 
-  def create_comment(conn, %{"comment" => comment_params}) do
-    IO.inspect(conn, label: "DAFAQ")
-    case Comments.create_comment(comment_params) do
+  def create_comment(conn,  %{"comment" => comment_params} = params) do
+
+    comment = Map.put(comment_params, "post_id", params["post_id"])
+    |> IO.inspect(label: "*****************************************WAAAAAAAAAAAAAAAAAAAAAHHH")
+    case Comments.create_comment(comment) do
       {:ok, comment} ->
       conn
-      |> IO.inspect(label: "Hard Knocks!")
       |> put_flash(:info, "comment created argumentatively")
-      |> redirect(to: Routes.post_path(conn, :show, comment))
+      |> redirect(to: Routes.post_path(conn, :show, comment.post_id))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -62,9 +63,13 @@ defmodule BlogWeb.PostController do
     changeset = Comments.change_comment(%Comment{})
 
 
+
     post = Posts.get_post!(id)
-    comments = Comments.list_comments()
-    render(conn, "show.html", post: post, comments: comments, changeset: changeset)
+
+    # comments = Comments.get_comment!(id)
+    # |> IO.inspect(Label: "****************************************************************")
+    render(conn, "show.html", post: post,  changeset: changeset)
+    # comments: comments,
   end
 
   def edit(conn, %{"id" => id}) do

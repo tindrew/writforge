@@ -3,8 +3,10 @@ defmodule Blog.Comments.Comment do
   import Ecto.Changeset
 
   schema "comments" do
-    field :comment, :string
+    field :content, :string
     belongs_to :post, Blog.Posts.Post
+
+    @required [:content, :post_id]
 
     timestamps()
   end
@@ -12,7 +14,7 @@ defmodule Blog.Comments.Comment do
   @doc false
   def changeset(comment, attrs) do
     comment
-    |> cast(attrs, [:comment])
-    |> validate_required([:comment])
+    |> cast(attrs, @required)
+    |> validate_required(@required)
   end
 end
