@@ -6,13 +6,15 @@ defmodule Blog.Comments.Comment do
     field :comment, :string
     belongs_to :post, Blog.Posts.Post
 
+    @required [:comment, :post_id]
+
     timestamps()
   end
 
   @doc false
   def changeset(comment, attrs) do
     comment
-    |> cast(attrs, [:comment])
-    |> validate_required([:comment])
+    |> cast(attrs, @required)
+    |> validate_required(@required)
   end
 end
