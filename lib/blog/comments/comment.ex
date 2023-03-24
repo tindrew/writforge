@@ -3,10 +3,10 @@ defmodule Blog.Comments.Comment do
   import Ecto.Changeset
 
   schema "comments" do
-    field :comment, :string
+    field :content, :string
     belongs_to :post, Blog.Posts.Post
 
-    @required [:comment, :post_id]
+    @required [:content, :post_id]
 
     timestamps()
   end

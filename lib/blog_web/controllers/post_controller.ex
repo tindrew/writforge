@@ -46,7 +46,7 @@ defmodule BlogWeb.PostController do
   def create_comment(conn,  %{"comment" => comment_params} = params) do
 
     comment = Map.put(comment_params, "post_id", params["post_id"])
-    |> IO.inspect(label: "comments")
+    |> IO.inspect(label: "*****************************************WAAAAAAAAAAAAAAAAAAAAAHHH")
     case Comments.create_comment(comment) do
       {:ok, comment} ->
       conn
