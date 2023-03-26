@@ -1,0 +1,16 @@
+{
+    "skip_files": [
+        "_build/",
+        "deps",
+        "test/",
+        "config/",
+        "lib/blog/application.ex",
+        "lib/blog/release.ex",
+        "lib/blog/blog.ex",
+        "lib/blog_web/endpoint.ex",
+        "lib/blog_web/telemetry.ex"
+    ],
+    "coverage_options": {
+        "minimum_coverage": 90
+    }
+}

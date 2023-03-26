@@ -2,6 +2,7 @@ defmodule Blog.PostsTest do
   use Blog.DataCase
 
   alias Blog.Posts
+  alias Blog.Repo
 
   describe "posts" do
     alias Blog.Posts.Post
@@ -16,17 +17,20 @@ defmodule Blog.PostsTest do
     end
 
     test "get_post!/1 returns the post with given id" do
-      post = post_fixture()
+      post =
+        post_fixture()
+        |> Repo.preload([:comments])
+
       assert Posts.get_post!(post.id) == post
     end
 
     test "create_post/1 with valid data creates a post" do
-      valid_attrs = %{content: "some content", subtitle: "some subtitle", title: "some title"}
+      valid_attrs = %{content: "some content", title: "some title", visible: true}
 
       assert {:ok, %Post{} = post} = Posts.create_post(valid_attrs)
       assert post.content == "some content"
-      assert post.subtitle == "some subtitle"
       assert post.title == "some title"
+      assert post.visible == true
     end
 
     test "create_post/1 with invalid data returns error changeset" do
@@ -38,18 +42,19 @@ defmodule Blog.PostsTest do
 
       update_attrs = %{
         content: "some updated content",
-        subtitle: "some updated subtitle",
         title: "some updated title"
       }
 
       assert {:ok, %Post{} = post} = Posts.update_post(post, update_attrs)
       assert post.content == "some updated content"
-      assert post.subtitle == "some updated subtitle"
       assert post.title == "some updated title"
     end
 
     test "update_post/2 with invalid data returns error changeset" do
-      post = post_fixture()
+      post =
+        post_fixture()
+        |> Repo.preload([:comments])
+
       assert {:error, %Ecto.Changeset{}} = Posts.update_post(post, @invalid_attrs)
       assert post == Posts.get_post!(post.id)
     end
