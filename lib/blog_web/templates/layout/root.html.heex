@@ -9,8 +9,8 @@
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
-  <body>
-    <header>
+  <body class="min-h-screen flex flex-col">
+    <header class="flex-grow">
       <section>
         <nav class=" container relative flex w-full  items-center bg-gray-200 h-18 ">
           <logo class="flex h-18 w-24  pl-4  self-center">
@@ -27,7 +27,7 @@
       </section>
     </header>
     <%= @inner_content %>
-    <footer class="w-full h-20 bg-gray-200 mt-20">
+    <footer class="w-full h-20 bg-gray-200 mt-auto">
       <p>Some realy interesting info</p>
     </footer>
   </body>
