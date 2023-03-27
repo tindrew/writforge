@@ -4,15 +4,13 @@ defmodule BlogWeb.PostController do
 
   alias Blog.Comments
   alias Blog.Comments.Comment
-  #alias Floki.HTMLTree.Comment
+  # alias Floki.HTMLTree.Comment
   alias Blog.Posts
   alias Blog.Posts.Post
 
   def index(conn, %{"title" => title}) do
-
     posts = Posts.list_posts(title: title)
     render(conn, "index.html", posts: posts)
-
   end
 
   def index(conn, _params) do
@@ -20,56 +18,44 @@ defmodule BlogWeb.PostController do
     render(conn, "index.html", posts: posts)
   end
 
-
-
   def new(conn, _params) do
     changeset = Posts.change_post(%Post{})
     # comment_changeset = Comments.change_comment(%Comment{})
     render(conn, "new.html", changeset: changeset)
   end
 
-  #comment_changeset: comment_changeset
+  # comment_changeset: comment_changeset
 
   def create(conn, %{"post" => post_params}) do
     case Posts.create_post(post_params) do
       {:ok, post} ->
-        IO.inspect(conn, label: "*********** WTF? Over! ***************")
         |> put_flash(:info, "Post created successfully.")
         |> redirect(to: Routes.post_path(conn, :show, post))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-
         render(conn, "new.html", changeset: changeset)
     end
   end
 
-  def create_comment(conn,  %{"comment" => comment_params} = params) do
-
+  def create_comment(conn, %{"comment" => comment_params} = params) do
     comment = Map.put(comment_params, "post_id", params["post_id"])
-    |> IO.inspect(label: "*****************************************WAAAAAAAAAAAAAAAAAAAAAHHH")
+
     case Comments.create_comment(comment) do
       {:ok, comment} ->
-      conn
-      |> put_flash(:info, "comment created argumentatively")
-      |> redirect(to: Routes.post_path(conn, :show, comment.post_id))
+        conn
+        |> put_flash(:info, "comment created argumentatively")
+        |> redirect(to: Routes.post_path(conn, :show, comment.post_id))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
   end
 
-
   def show(conn, %{"id" => id}) do
     changeset = Comments.change_comment(%Comment{})
-
-
-
     post = Posts.get_post!(id)
 
-    # comments = Comments.get_comment!(id)
-    # |> IO.inspect(Label: "****************************************************************")
-    render(conn, "show.html", post: post,  changeset: changeset)
-    # comments: comments,
+    render(conn, "show.html", post: post, changeset: changeset)
   end
 
   def edit(conn, %{"id" => id}) do
@@ -100,8 +86,4 @@ defmodule BlogWeb.PostController do
     |> put_flash(:info, "Post deleted successfully.")
     |> redirect(to: Routes.post_path(conn, :index))
   end
-
-
-
-
 end
