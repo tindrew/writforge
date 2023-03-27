@@ -11,4 +11,6 @@
 # and so on) as they will fail if something goes wrong.
 # IO.puts(Blog.Factories.BlogFactory.post_factory())
 
-IO.inspect(Faker.Lorem.paragraph(2..5))
+Enum.each(1..10, fn ->
+  nil
+end)
