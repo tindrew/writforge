@@ -1,4 +1,4 @@
-<section class="relative px-20 bg-white">
+<section class="grid relative px-20 bg-white">
   <h1 class="text-6xl font-bold mt-10">Listing Posts</h1>
   <div class="flex text-right flex-col p-20 py-5">
     <new-div class="mb-5 bg-gray-200 w-16 h-8">
@@ -20,7 +20,7 @@
 
   <!--div class="relative bg-cover bg-no-repeat bg-right opacity-50 h-96 w-1/4 rounded-lg shadow-lg overflow-hidden bg- text-center" style="background-image: url('/images/typewriter-brown.jpg')"-->
 
-  <grid-div class="grid lg:grid-cols-3 gap-10 px-20">
+  <card-grid-div class="grid lg:grid-cols-3 gap-10 px-20">
     <%= for post <- @posts do %>
       <card-div class="bg-gray-200 h-96 w-full rounded-lg shadow-lg">
         <!--header class="flex justify-between h-20 w-full"-->
@@ -47,12 +47,12 @@
             </div>
           </div>
         </article>
-        <footer class="bg-gray-200 text-gray-900  h-20 w-full p-2">
+        <card-footer class="bg-gray-200 text-gray-900  h-20 w-full p-2">
           <span class="p-1 hover:text-gray-600"><%= link "Show", to: Routes.post_path(@conn, :show, post) %></span>
           <span class="p-1 hover:text-gray-600"><%= link "Edit", to: Routes.post_path(@conn, :edit, post) %></span>
           <span class="p-1 hover:text-red-600"><%= link "Delete", to: Routes.post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"] %></span>
-        </footer>
+        </card-footer>
       </card-div>
     <% end %>
-  </grid-div>
+  </card-grid-div>
 </section>
