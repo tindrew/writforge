@@ -29,6 +29,7 @@ defmodule BlogWeb.PostController do
   def create(conn, %{"post" => post_params}) do
     case Posts.create_post(post_params) do
       {:ok, post} ->
+        conn
         |> put_flash(:info, "Post created successfully.")
         |> redirect(to: Routes.post_path(conn, :show, post))
 
