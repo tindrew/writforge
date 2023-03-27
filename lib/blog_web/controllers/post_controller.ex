@@ -52,10 +52,7 @@ defmodule BlogWeb.PostController do
 
   def show(conn, %{"id" => id}) do
     changeset = Comments.change_comment(%Comment{})
-<<<<<<< HEAD
 
-=======
->>>>>>> main
     post = Posts.get_post!(id)
 
     render(conn, "show.html", post: post, changeset: changeset)
