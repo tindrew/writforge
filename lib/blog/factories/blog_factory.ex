@@ -1,4 +1,7 @@
 defmodule Blog.Factories.BlogFactory do
+  @moduledoc """
+  Creates seed data to populate the dev database
+  """
   alias Faker
 
   def post_w_comments(attrs \\ %{}) do

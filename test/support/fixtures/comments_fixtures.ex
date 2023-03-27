@@ -11,7 +11,7 @@ defmodule Blog.CommentsFixtures do
     {:ok, comment} =
       attrs
       |> Enum.into(%{
-        comment: "some comment"
+        content: "some comment"
       })
       |> Blog.Comments.create_comment()
 

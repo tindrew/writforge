@@ -20,11 +20,9 @@ defmodule BlogWeb.PostController do
 
   def new(conn, _params) do
     changeset = Posts.change_post(%Post{})
-    # comment_changeset = Comments.change_comment(%Comment{})
+
     render(conn, "new.html", changeset: changeset)
   end
-
-  # comment_changeset: comment_changeset
 
   def create(conn, %{"post" => post_params}) do
     case Posts.create_post(post_params) do
@@ -54,6 +52,7 @@ defmodule BlogWeb.PostController do
 
   def show(conn, %{"id" => id}) do
     changeset = Comments.change_comment(%Comment{})
+
     post = Posts.get_post!(id)
 
     render(conn, "show.html", post: post, changeset: changeset)
