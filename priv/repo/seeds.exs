@@ -9,8 +9,13 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
-# IO.puts(Blog.Factories.BlogFactory.post_factory())
+# import Blog.Factories.BlogFactory only: post_w_comments()
 
+<<<<<<< Updated upstream
 Enum.each(1..10, fn ->
   nil
 end)
+=======
+alias Blog.Factories.BlogFactory
+BlogFactory.post_w_comments()
+>>>>>>> Stashed changes
