@@ -12,7 +12,7 @@ defmodule Blog.PostsFixtures do
       attrs
       |> Enum.into(%{
         content: "some content",
-        subtitle: "some subtitle",
+        visible: true,
         title: "some title"
       })
       |> Blog.Posts.create_post()
