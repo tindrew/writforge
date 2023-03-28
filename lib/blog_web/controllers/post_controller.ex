@@ -25,6 +25,8 @@ defmodule BlogWeb.PostController do
   end
 
   def create(conn, %{"post" => post_params}) do
+    post_params = Map.put(post_params, "user_id", conn.assigns[:current_user].id)
+
     case Posts.create_post(post_params) do
       {:ok, post} ->
         conn
@@ -57,6 +59,8 @@ defmodule BlogWeb.PostController do
 
     render(conn, "show.html", post: post, changeset: changeset)
   end
+
+
 
   def edit(conn, %{"id" => id}) do
     post = Posts.get_post!(id)

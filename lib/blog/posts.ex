@@ -28,9 +28,17 @@ defmodule Blog.Posts do
     Repo.all(query)
   end
 
-  def list_posts do
-    Repo.all(Post)
+  def list_posts(user_id) do
+    Post
+    |>
+    |> Repo.all()
   end
+
+  # def list_entries(user_id) do
+  #   Entry
+  #   |> where([e], e.user_id == ^user_id)
+  #   |> Repo.all()
+  # end
 
 
   @doc """

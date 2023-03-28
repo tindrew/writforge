@@ -23,13 +23,13 @@ defmodule BlogWeb.Router do
 
     get "/", PageController, :index
 
-    post "/posts/:post_id", PostController, :create_comment
-    resources "/posts", PostController
+    resources "/posts", PostController, only: [:index, :show]
+
   end
 
   # Other scopes may use custom stacks.
   # scope "/api", BlogWeb do
-  #   pipe_through :api
+    #   pipe_through :api
   # end
 
   # Enables LiveDashboard only for development
@@ -79,6 +79,8 @@ defmodule BlogWeb.Router do
   scope "/", BlogWeb do
     pipe_through [:browser, :require_authenticated_user]
 
+    post "/posts/:post_id", PostController, :create_comment
+    resources "/posts", PostController, only: [:create, :new]
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
