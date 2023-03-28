@@ -22,9 +22,9 @@
 
   <card-grid-div class="grid lg:grid-cols-3 gap-10 px-20">
     <%= for post <- @posts do %>
-      <card-div class="bg-gray-200 h-96 w-full rounded-lg shadow-lg">
+      <card-div class="bg-gray-200 h-48 w-full rounded-lg shadow-lg overflow-hidden">
         <!--header class="flex justify-between h-20 w-full"-->
-        <header class="grid gird-col-6 gap-1 bg-gray-500 p-2">
+        <header class="grid gird-col-6 gap-1 bg-slate-500 p-2">
           <div class="col-start-1 col-end-4">
             <div class="flex flex-col font-bold text-xl ">
               <div class="text-4xl">
@@ -37,10 +37,10 @@
             </div>
           </div>
           <div class="col-start-5 col-end-6 flex justify-end">
-          <img src={Routes.static_path(@conn, "/images/small_writforge.png")} class="flex justify-center self-center" alt="Small WritForge logo"/>
+         
           </div>
         </header>
-        <article class="flex justify-center relative text-gray-50 h-64 overflow-hidden" style="background-image: url('/images/typewriter-brown.jpg')">
+        <article class="flex justify-left relative text-slate-500 h-64 overflow-hidden" >
           <div class="absolute">
             <div class="flex justify-center px-5 pt-5 whitespace-pre-wrap">
               <%= post.content %>
