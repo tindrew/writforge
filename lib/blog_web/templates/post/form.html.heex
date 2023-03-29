@@ -21,6 +21,12 @@
   <%= checkbox f, :visible, checked: "checked" %>
   <%= error_tag f, :visible %>
 
+  <%= label f, :tags %>
+  
+  <%= multiple_select f, :tags, (for tag <- @tags, do: tag.name) %>
+ 
+  <%= error_tag f, :tags %>
+
   <div>
     <%= submit "Save" %>
   </div>

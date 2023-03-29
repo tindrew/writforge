@@ -18,15 +18,12 @@ defmodule BlogWeb.Router do
   end
 
   scope "/", BlogWeb do
-
-    pipe_through [:browser, :redirect_if_user_is_authenticated]
+    pipe_through [:browser, :require_authenticated_user]
 
     post "/posts/:post_id", PostController, :create_comment
     resources "/posts", PostController, only: [:create, :delete, :edit, :new]
     resources "/tags", TagController
   end
-
-
 
   scope "/", BlogWeb do
     pipe_through :browser
@@ -102,6 +99,4 @@ defmodule BlogWeb.Router do
     get "/users/confirm/:token", UserConfirmationController, :edit
     post "/users/confirm/:token", UserConfirmationController, :update
   end
-
-
 end
