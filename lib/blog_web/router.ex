@@ -18,11 +18,13 @@ defmodule BlogWeb.Router do
   end
 
   scope "/", BlogWeb do
+
     pipe_through [:browser, :redirect_if_user_is_authenticated]
 
     post "/posts/:post_id", PostController, :create_comment
     resources "/posts", PostController, only: [:create, :delete, :edit, :new]
   end
+
 
   scope "/", BlogWeb do
     pipe_through :browser

@@ -60,8 +60,6 @@ defmodule BlogWeb.PostController do
     render(conn, "show.html", post: post, changeset: changeset)
   end
 
-
-
   def edit(conn, %{"id" => id}) do
     post = Posts.get_post!(id)
     changeset = Posts.change_post(post)
@@ -90,4 +88,20 @@ defmodule BlogWeb.PostController do
     |> put_flash(:info, "Post deleted successfully.")
     |> redirect(to: Routes.post_path(conn, :index))
   end
+
+  plug :require_user_owns_post when action in [:edit, :update, :delete]
+
+  def require_user_owns_post(conn, _opts) do
+      post_id = String.to_integer(conn.path_params["id"])
+      post = Posts.get_post!(post_id)
+
+      if conn.assigns[:current_user].id == post.user_id do
+        conn
+      else
+        conn
+        |> put_flash(:error, "You do not own this resource.")
+        |> redirect(to: Routes.post_path(conn, :index))
+        |> halt()
+      end
+    end
 end

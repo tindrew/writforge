@@ -11,6 +11,5 @@
 # and so on) as they will fail if something goes wrong.
 # import Blog.Factories.BlogFactory only: post_w_comments()
 
-
 alias Blog.Factories.BlogFactory
 BlogFactory.post_w_comments()

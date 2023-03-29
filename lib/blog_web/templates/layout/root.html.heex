@@ -25,7 +25,11 @@
             <Components.link href={Routes.page_path(@conn, :index)}>Home</Components.link>
             <Components.link href="/posts">Posts</Components.link>
             <Components.link href="/about">About</Components.link>
+
             <%= render "_user_menu.html", assigns %>
+
+
+            <%!-- <Components.link href="/log_in">Log In</Components.link> --%>
 
           </nav-links>
 
