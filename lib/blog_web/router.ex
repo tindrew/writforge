@@ -23,7 +23,9 @@ defmodule BlogWeb.Router do
 
     post "/posts/:post_id", PostController, :create_comment
     resources "/posts", PostController, only: [:create, :delete, :edit, :new]
+    resources "/tags", TagController
   end
+
 
 
   scope "/", BlogWeb do
@@ -100,4 +102,6 @@ defmodule BlogWeb.Router do
     get "/users/confirm/:token", UserConfirmationController, :edit
     post "/users/confirm/:token", UserConfirmationController, :update
   end
+
+
 end
