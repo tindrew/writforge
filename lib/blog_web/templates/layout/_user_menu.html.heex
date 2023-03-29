@@ -1,10 +1,23 @@
-<ul>
+
+<%= if @current_user do %>
+  <%= @current_user.email %>
+  <%= link "Settings", to: Routes.user_settings_path(@conn, :edit) %>
+  <%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete %>
+
+<% else %>
+
+  <Components.link href={Routes.user_registration_path(@conn, :new)}>Register</Components.link>
+  <Components.link href={Routes.user_session_path(@conn, :new)}>Log in</Components.link>
+<% end %>
+
+
+<%!-- <ul>
 <%= if @current_user do %>
   <li><%= @current_user.email %></li>
-  <li><%= link "Settings", to: Routes.user_settings_path(@conn, :edit) %></li>
+  <li><%= link "Settings", to: Routes.user_settings_path(@conn, :edit) %>Edit</li>
   <li><%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete %></li>
 <% else %>
   <li><%= link "Register", to: Routes.user_registration_path(@conn, :new) %></li>
   <li><%= link "Log in", to: Routes.user_session_path(@conn, :new) %></li>
 <% end %>
-</ul>
+</ul> --%>

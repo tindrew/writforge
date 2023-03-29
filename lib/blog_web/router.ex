@@ -18,9 +18,11 @@ defmodule BlogWeb.Router do
   end
 
   scope "/", BlogWeb do
-    pipe_through [:browser, :require_authenticated_user]
+
+    pipe_through [:browser, :redirect_if_user_is_authenticated]
+
     post "/posts/:post_id", PostController, :create_comment
-    resources "/posts", PostController, only: [:create, :new, :edit, :update, :delete]
+    resources "/posts", PostController, only: [:create, :delete, :edit, :new]
   end
 
 
@@ -30,7 +32,6 @@ defmodule BlogWeb.Router do
     get "/", PageController, :index
 
     resources "/posts", PostController, only: [:index, :show]
-
   end
 
   # Other scopes may use custom stacks.
@@ -84,6 +85,7 @@ defmodule BlogWeb.Router do
 
   scope "/", BlogWeb do
     pipe_through [:browser, :require_authenticated_user]
+
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
