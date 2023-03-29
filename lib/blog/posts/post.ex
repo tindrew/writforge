@@ -11,15 +11,17 @@ defmodule Blog.Posts.Post do
     field :published_on, :utc_datetime, default: DateTime.utc_now() |> DateTime.truncate(:second)
     field :visible, :boolean
     has_many :comments, Blog.Comments.Comment
+    belongs_to :user, Blog.Accounts.User
 
     timestamps()
   end
 
   @required [:content, :title, :published_on, :visible]
+  @allowed [:user_id]
   @doc false
   def changeset(post, attrs) do
     post
-    |> cast(attrs, @required)
+    |> cast(attrs, @required ++ @allowed)
     |> validate_required(@required)
   end
 end

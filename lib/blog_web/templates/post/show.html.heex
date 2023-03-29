@@ -36,8 +36,7 @@
 <span><%= link "Edit", to: Routes.post_path(@conn, :edit, @post) %></span> |
 <span><%= link "Back", to: Routes.post_path(@conn, :index) %></span>
 
-<.form let={f} for={@changeset} action={Routes.post_path(@conn, :create_comment, @post.id)}>
-  <%!-- action={"/posts/#{@post.id}"} --%>
+<.form let={f} for={@changeset} action={Routes.post_path(@conn, :create_comment, @post.id)}> 
     <% IO.inspect(@changeset) %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
