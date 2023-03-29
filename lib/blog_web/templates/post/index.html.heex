@@ -22,7 +22,7 @@
 
   <card-grid-div class="grid lg:grid-cols-3 gap-10 px-20">
     <%= for post <- @posts do %>
-      <card-div class="bg-gray-200 h-48 w-full rounded-lg shadow-lg overflow-hidden">
+      <card-div class="bg-gray-200 h-96 w-full rounded-lg shadow-lg overflow-hidden">
         <!--header class="flex justify-between h-20 w-full"-->
         <header class="grid gird-col-6 gap-1 bg-slate-500 p-2">
           <div class="col-start-1 col-end-4">
@@ -31,23 +31,25 @@
                 <%= post.title %><br>
               </div>
               <div class="font-semibold text-xl">
-                <span class="text-sm font-light"><%= Calendar.strftime(post.published_on, "%B %-d, %Y") %></span>
+                <span class="text-sm font-light">
+                <%= Calendar.strftime(post.published_on, "%B %-d, %Y") %>
+                </span>
               </div>
               <div class="font-light text-sm "></div>
             </div>
           </div>
           <div class="col-start-5 col-end-6 flex justify-end">
-         
+
           </div>
         </header>
-        <article class="flex justify-left relative text-slate-500 h-64 overflow-hidden" >
+        <article class="flex justify-left relative text-slate-500   scroll" >
           <div class="absolute">
-            <div class="flex justify-center px-5 pt-5 whitespace-pre-wrap">
+            <div class="flex justify-center px-5 pt-5 h-full whitespace-pre-wrap">
               <%= post.content %>
             </div>
           </div>
         </article>
-        <card-footer class="bg-gray-200 text-gray-900  h-20 w-full p-2">
+        <card-footer class="flex relative bg-gray-200 text-gray-900  h-20 w-full p-2">
           <span class="p-1 hover:text-gray-600"><%= link "Show", to: Routes.post_path(@conn, :show, post) %></span>
           <span class="p-1 hover:text-gray-600"><%= link "Edit", to: Routes.post_path(@conn, :edit, post) %></span>
           <span class="p-1 hover:text-red-600"><%= link "Delete", to: Routes.post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"] %></span>

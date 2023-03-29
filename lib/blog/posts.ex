@@ -9,14 +9,24 @@ defmodule Blog.Posts do
   alias Blog.Posts.Post
 
   @doc """
-  Returns the list of posts.
+      Returns the list of posts.
 
-  ## Examples
+      ## Examples
 
       iex> list_posts()
       [%Post{}, ...]
 
   """
+  def list_posts do
+    Repo.all(Post)
+    # |> preload([:users])
+  end
+
+  def list_posts(user_id) when user_id == true do
+    Post
+    |> where([post], post.user_id == ^user_id)
+    |> Repo.all()
+  end
 
   def list_posts(filters) do
     post_title = "%#{filters[:title]}%"
@@ -28,18 +38,11 @@ defmodule Blog.Posts do
     Repo.all(query)
   end
 
-  def list_posts(user_id) do
-    Post
-    |>
-    |> Repo.all()
-  end
-
   # def list_entries(user_id) do
   #   Entry
   #   |> where([e], e.user_id == ^user_id)
   #   |> Repo.all()
   # end
-
 
   @doc """
   Gets a single post.

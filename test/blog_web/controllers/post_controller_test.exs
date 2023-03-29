@@ -1,7 +1,12 @@
 defmodule BlogWeb.PostControllerTest do
   use BlogWeb.ConnCase
 
+  import Blog.AccountsFixtures
   import Blog.PostsFixtures
+
+  # setup do
+  #   %{user: user_fixture()}
+  # end
 
   @create_attrs %{content: "some content", title: "some title", visible: true}
   @update_attrs %{
@@ -42,9 +47,11 @@ defmodule BlogWeb.PostControllerTest do
   end
 
   describe "edit post" do
-    setup [:create_post]
 
-    test "renders form for editing chosen post", %{conn: conn, post: post} do
+    test "renders form for editing chosen post", %{conn: conn} do
+      post = post_fixture()
+      conn = conn |> log_in_user(user_fixture())
+
       conn = get(conn, Routes.post_path(conn, :edit, post))
       assert html_response(conn, 200) =~ "Edit Post"
     end
@@ -54,6 +61,8 @@ defmodule BlogWeb.PostControllerTest do
     setup [:create_post]
 
     test "redirects when data is valid", %{conn: conn, post: post} do
+      conn = conn |> log_in_user(user_fixture())
+
       conn = put(conn, Routes.post_path(conn, :update, post), post: @update_attrs)
       assert redirected_to(conn) == Routes.post_path(conn, :show, post)
 
