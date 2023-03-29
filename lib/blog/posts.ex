@@ -30,7 +30,11 @@ defmodule Blog.Posts do
 
   def list_posts(user_id) do
     Post
-    |>
+    |> Repo.all()
+  end
+
+  def list_posts() do
+    Post
     |> Repo.all()
   end
 
@@ -39,7 +43,6 @@ defmodule Blog.Posts do
   #   |> where([e], e.user_id == ^user_id)
   #   |> Repo.all()
   # end
-
 
   @doc """
   Gets a single post.
