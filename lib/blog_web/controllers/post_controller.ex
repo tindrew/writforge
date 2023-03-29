@@ -7,6 +7,8 @@ defmodule BlogWeb.PostController do
   # alias Floki.HTMLTree.Comment
   alias Blog.Posts
   alias Blog.Posts.Post
+  # alias Blog.Tags.Tag
+  alias Blog.Tags
 
   def index(conn, %{"title" => title}) do
     posts = Posts.list_posts(title: title)
@@ -19,10 +21,15 @@ defmodule BlogWeb.PostController do
   end
 
   def new(conn, _params) do
-    changeset = Posts.change_post(%Post{})
+    changeset = Posts.change_post(%Post{tags: []})
 
-    render(conn, "new.html", changeset: changeset)
+    tags = Tags.list_tags()
+    |> IO.inspect(label: "WTF?")
+    render(conn, "new.html", changeset: changeset, tags: tags)
   end
+
+
+
 
   def create(conn, %{"post" => post_params}) do
     post_params = Map.put(post_params, "user_id", conn.assigns[:current_user].id)
@@ -92,16 +99,16 @@ defmodule BlogWeb.PostController do
   plug :require_user_owns_post when action in [:edit, :update, :delete]
 
   def require_user_owns_post(conn, _opts) do
-      post_id = String.to_integer(conn.path_params["id"])
-      post = Posts.get_post!(post_id)
+    post_id = String.to_integer(conn.path_params["id"])
+    post = Posts.get_post!(post_id)
 
-      if conn.assigns[:current_user].id == post.user_id do
-        conn
-      else
-        conn
-        |> put_flash(:error, "You do not own this resource.")
-        |> redirect(to: Routes.post_path(conn, :index))
-        |> halt()
-      end
+    if conn.assigns[:current_user].id == post.user_id do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You do not own this resource.")
+      |> redirect(to: Routes.post_path(conn, :index))
+      |> halt()
     end
+  end
 end

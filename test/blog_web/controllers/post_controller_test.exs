@@ -47,7 +47,6 @@ defmodule BlogWeb.PostControllerTest do
   end
 
   describe "edit post" do
-
     test "renders form for editing chosen post", %{conn: conn} do
       post = post_fixture()
       conn = conn |> log_in_user(user_fixture())

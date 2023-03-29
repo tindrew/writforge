@@ -20,13 +20,11 @@ defmodule Blog.Posts do
 
   """
 
-
   def list_posts(user_id) when user_id == true do
     Post
     |> where([post], post.user_id == ^user_id)
     |> Repo.all()
   end
-
 
   def list_posts(filters) do
     post_title = "%#{filters[:title]}%"
@@ -38,13 +36,10 @@ defmodule Blog.Posts do
     Repo.all(query)
   end
 
-
-
   def list_posts() do
     Post
     |> Repo.all()
   end
-
 
   @doc """
   Gets a single post.
