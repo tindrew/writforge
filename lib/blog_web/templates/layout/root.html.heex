@@ -12,16 +12,16 @@
   <body class="min-h-screen flex flex-col">
     <header class="flex-grow">
       <section>
-        <nav class="flex justify-around py-4 bg-gray-200 ">
+        <nav class="flex justify-around py-4 bg-gray-600 ">
           <logo class="flex  object-cover">
-           <a href={Routes.page_path(@conn, :index)}> <img src={Routes.static_path(@conn, "/images/writforge.png")} class="h-16 w-16 p-1" alt="writforge logo"/></a>
+           <a href={Routes.page_path(@conn, :index)}> <img src={Routes.static_path(@conn, "/images/writforge.png")} class="h-14 object-cover " alt="writforge logo"/></a>
           </logo>
 
 
 
 
-          <h2>WritForge</h2>
-          <nav-links class="flex  bg-red-500">
+          
+          <nav-links class="flex">
             <Components.link href={Routes.page_path(@conn, :index)}>Home</Components.link>
             <Components.link href="/posts">Posts</Components.link>
             <Components.link href="/about">About</Components.link>
