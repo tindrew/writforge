@@ -92,16 +92,17 @@ defmodule BlogWeb.PostController do
   plug :require_user_owns_post when action in [:edit, :update, :delete]
 
   def require_user_owns_post(conn, _opts) do
-      post_id = String.to_integer(conn.path_params["id"])
-      post = Posts.get_post!(post_id)
+    post =
+      String.to_integer(conn.path_params["id"])
+      |> Posts.get_post!()
 
-      if conn.assigns[:current_user].id == post.user_id do
-        conn
-      else
-        conn
-        |> put_flash(:error, "You do not own this resource.")
-        |> redirect(to: Routes.post_path(conn, :index))
-        |> halt()
-      end
+    if conn.assigns[:current_user].id == post.user_id do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You do not own this resource.")
+      |> redirect(to: Routes.post_path(conn, :index))
+      |> halt()
     end
+  end
 end
