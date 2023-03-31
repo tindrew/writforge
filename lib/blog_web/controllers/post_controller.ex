@@ -32,9 +32,12 @@ defmodule BlogWeb.PostController do
 
 
   def create(conn, %{"post" => post_params}) do
-    post_params = Map.put(post_params, "user_id", conn.assigns[:current_user].id)
 
-    case Posts.create_post(post_params) do
+    post_params = Map.put(post_params, "user_id", conn.assigns[:current_user].id)
+    {tag_ids, post_params} = Map.pop(post_params, "tags", [])
+    tags = Enum.map(tag_ids, &Tags.get_tag!/1)
+
+    case Posts.create_post(post_params,tags) do
       {:ok, post} ->
         conn
         |> put_flash(:info, "Post created successfully.")
@@ -63,6 +66,7 @@ defmodule BlogWeb.PostController do
     changeset = Comments.change_comment(%Comment{})
 
     post = Posts.get_post!(id)
+    IO.inspect(post)
 
     render(conn, "show.html", post: post, changeset: changeset)
   end

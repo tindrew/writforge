@@ -22,17 +22,19 @@
     <strong>Visible:</strong>
     <%= @post.visible %>
   </li>
+
+  <li class="font-bold ">
+    <strong>Tags:</strong>
+    <%= for tag <- @post.tags, do: tag.name %>
+  </li>
+
 </ul>
 
 <ul>
   <strong>COMMENTS:</strong>
-  <%= for comment <- @post.comments do %>
-
   <li>
-    <%= comment.content %>
+    <%= for comment <- @post.comments, do: comment.content %>
   </li>
-
-    <% end %>
 </ul>
 
 <span><%= link "Edit", to: Routes.post_path(@conn, :edit, @post) %></span> |

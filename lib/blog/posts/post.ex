@@ -19,9 +19,9 @@ defmodule Blog.Posts.Post do
   end
 
   @required [:content, :title, :published_on, :visible]
-  @allowed [:user_id, :tags]
+  @allowed [:user_id]
   @doc false
-  def changeset(post, attrs) do
+  def changeset(post, attrs, tags) do
     post
     |> cast(attrs, @required ++ @allowed)
     |> put_assoc(:tags, tags)
