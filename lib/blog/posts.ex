@@ -24,7 +24,7 @@ defmodule Blog.Posts do
     Post
     |> where([post], post.user_id == ^user_id)
     |> Repo.all()
-    |> Repo.preload(:tags)
+    |> Repo.preload([:tags])
   end
 
   def list_posts(filters) do
@@ -35,13 +35,13 @@ defmodule Blog.Posts do
         where: ilike(p.title, ^post_title) or ilike(p.content, ^post_title)
 
     Repo.all(query)
-    |> Repo.preload(:tags)
+    |> Repo.preload([:tags])
   end
 
   def list_posts() do
     Post
     |> Repo.all()
-    |> Repo.preload(:tags)
+    |> Repo.preload([:tags])
   end
 
   @doc """

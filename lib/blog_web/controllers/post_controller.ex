@@ -23,21 +23,19 @@ defmodule BlogWeb.PostController do
   def new(conn, _params) do
     changeset = Posts.change_post(%Post{tags: []})
 
-    tags = Tags.list_tags()
-    |> IO.inspect(label: "WTF?")
+    tags =
+      Tags.list_tags()
+      |> IO.inspect(label: "WTF?")
+
     render(conn, "new.html", changeset: changeset, tags: tags)
   end
 
-
-
-
   def create(conn, %{"post" => post_params}) do
-
     post_params = Map.put(post_params, "user_id", conn.assigns[:current_user].id)
     {tag_ids, post_params} = Map.pop(post_params, "tags", [])
     tags = Enum.map(tag_ids, &Tags.get_tag!/1)
 
-    case Posts.create_post(post_params,tags) do
+    case Posts.create_post(post_params, tags) do
       {:ok, post} ->
         conn
         |> put_flash(:info, "Post created successfully.")
@@ -72,9 +70,19 @@ defmodule BlogWeb.PostController do
   end
 
   def edit(conn, %{"id" => id}) do
+    tags = Tags.list_tags()
+
     post = Posts.get_post!(id)
+    IO.inspect(post.tags, label: "My post!")
+
     changeset = Posts.change_post(post)
-    render(conn, "edit.html", post: post, changeset: changeset)
+
+    tag_ids =
+      Enum.map(post.tags, fn tag ->
+        tag.id
+      end)
+
+    render(conn, "edit.html", changeset: changeset, post: post, tags: tags, tag_ids: tag_ids)
   end
 
   def update(conn, %{"id" => id, "post" => post_params}) do
