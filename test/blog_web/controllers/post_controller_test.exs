@@ -5,7 +5,6 @@ defmodule BlogWeb.PostControllerTest do
   import Blog.PostsFixtures
   import Blog.TagsFixtures
 
-
   # setup do
   #   %{user: user_fixture()}
   # end
@@ -13,7 +12,8 @@ defmodule BlogWeb.PostControllerTest do
   @create_attrs %{content: "some content", title: "some title", visible: true}
   @update_attrs %{
     content: "some updated content",
-    title: "some updated title"
+    title: "some updated title",
+    tags: []
   }
   @invalid_attrs %{content: nil, title: nil, visible: nil, tags: nil}
 
@@ -34,7 +34,8 @@ defmodule BlogWeb.PostControllerTest do
 
   describe "create post" do
     test "redirects to show when data is valid", %{conn: conn} do
-      conn = conn |> log_in_user(user_fixture()) #logs in user
+      # logs in user
+      conn = conn |> log_in_user(user_fixture())
       conn = post(conn, Routes.post_path(conn, :create), post: @create_attrs)
 
       assert %{id: id} = redirected_params(conn)
@@ -53,8 +54,9 @@ defmodule BlogWeb.PostControllerTest do
 
   describe "edit post" do
     test "renders form for editing chosen post", %{conn: conn} do
-      post = post_fixture()
-      conn = conn |> log_in_user(user_fixture())
+      user = user_fixture()
+      conn = conn |> log_in_user(user)
+      post = post_fixture(user_id: user.id)
 
       conn = get(conn, Routes.post_path(conn, :edit, post))
       assert html_response(conn, 200) =~ "Edit Post"
@@ -65,7 +67,10 @@ defmodule BlogWeb.PostControllerTest do
     setup [:create_post]
 
     test "redirects when data is valid", %{conn: conn, post: post} do
-      conn = conn |> log_in_user(user_fixture())
+      user = user_fixture()
+      post = post_fixture(user_id: user.id)
+
+      conn = conn |> log_in_user(user)
 
       conn = put(conn, Routes.post_path(conn, :update, post), post: @update_attrs)
       assert redirected_to(conn) == Routes.post_path(conn, :show, post)

@@ -10,6 +10,8 @@ defmodule BlogWeb.PostController do
   # alias Blog.Tags.Tag
   alias Blog.Tags
 
+  plug :require_user_owns_post when action in [:edit, :update, :delete]
+
   def index(conn, %{"title" => title}) do
     posts = Posts.list_posts(title: title)
     render(conn, "index.html", posts: posts)
@@ -85,6 +87,7 @@ defmodule BlogWeb.PostController do
   end
 
   def update(conn, %{"id" => id, "post" => post_params}) do
+    IO.inspect("WTH?", label: "*****************************")
     post = Posts.get_post!(id)
 
     tags =
@@ -92,11 +95,7 @@ defmodule BlogWeb.PostController do
         Tags.get_tag!(tag_id)
       end)
 
-    case Posts.update_post(
-           IO.inspect(post, label: "??????????????????post??????????????"),
-           IO.inspect(post_params, label: "post_params"),
-           IO.inspect(tags, label: "Tag IDS?????????????????????????????")
-         ) do
+    case Posts.update_post(post, post_params, tags) do
       {:ok, post} ->
         conn
         |> put_flash(:info, "Post updated successfully.")
@@ -115,8 +114,6 @@ defmodule BlogWeb.PostController do
     |> put_flash(:info, "Post deleted successfully.")
     |> redirect(to: Routes.post_path(conn, :index))
   end
-
-  plug :require_user_owns_post when action in [:edit, :update, :delete]
 
   def require_user_owns_post(conn, _opts) do
     post_id = String.to_integer(conn.path_params["id"])
