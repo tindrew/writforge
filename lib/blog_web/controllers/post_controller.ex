@@ -73,7 +73,6 @@ defmodule BlogWeb.PostController do
     tags = Tags.list_tags()
 
     post = Posts.get_post!(id)
-    IO.inspect(post.tags, label: "My post!")
 
     changeset = Posts.change_post(post)
 
@@ -88,7 +87,16 @@ defmodule BlogWeb.PostController do
   def update(conn, %{"id" => id, "post" => post_params}) do
     post = Posts.get_post!(id)
 
-    case Posts.update_post(post, post_params) do
+    tags =
+      Enum.map(post_params["tags"], fn tag_id ->
+        Tags.get_tag!(tag_id)
+      end)
+
+    case Posts.update_post(
+           IO.inspect(post, label: "??????????????????post??????????????"),
+           IO.inspect(post_params, label: "post_params"),
+           IO.inspect(tags, label: "Tag IDS?????????????????????????????")
+         ) do
       {:ok, post} ->
         conn
         |> put_flash(:info, "Post updated successfully.")
