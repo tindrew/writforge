@@ -21,7 +21,7 @@ defmodule BlogWeb.Router do
     pipe_through [:browser, :require_authenticated_user]
 
     post "/posts/:post_id", PostController, :create_comment
-    resources "/posts", PostController, only: [:create, :delete, :edit, :new]
+    resources "/posts", PostController, only: [:create, :delete, :edit, :new, :update]
     resources "/tags", TagController
   end
 
