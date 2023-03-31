@@ -22,13 +22,7 @@
   <%= error_tag f, :visible %>
 
   <%= label f, :tags %>
-
-  <%!-- <%= multiple_select f, :tags, Enum.map(@tags, fn tag -> {tag.name, tag.id}  end) %> --%>
-
-  <%= multiple_select f, :tags, (for tag <- @tags, do: {tag.name, tag.id}) %>
-
-  <%!-- <%= multiple_select f, :tags, [{"label", "value"}] %> --%>
-
+  <%= multiple_select f, :tags, (for tag <- @tags, do: {tag.name, tag.id}), selected: assigns[:tag_ids] || [] %>
   <%= error_tag f, :tags %>
 
   <div>
