@@ -9,7 +9,7 @@ defmodule Blog.PostsTest do
 
     import Blog.PostsFixtures
 
-    @invalid_attrs %{content: nil, subtitle: nil, title: nil}
+    @invalid_attrs %{content: nil, title: nil, tags: nil}
 
     test "list_posts/0 returns all posts" do
       post = post_fixture()
