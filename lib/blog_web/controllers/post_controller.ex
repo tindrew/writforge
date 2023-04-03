@@ -23,28 +23,28 @@ defmodule BlogWeb.PostController do
   end
 
   def new(conn, _params) do
-    changeset = Posts.change_post(%Post{tags: []})
+    changeset = Posts.change_post(%Post{})
 
-    tags =
-      Tags.list_tags()
-      |> IO.inspect(label: "WTF?")
+    tags = Tags.list_tags()
 
     render(conn, "new.html", changeset: changeset, tags: tags)
   end
 
   def create(conn, %{"post" => post_params}) do
     post_params = Map.put(post_params, "user_id", conn.assigns[:current_user].id)
-    {tag_ids, post_params} = Map.pop(post_params, "tags", [])
-    tags = Enum.map(tag_ids, &Tags.get_tag!/1)
 
-    case Posts.create_post(post_params, tags) do
+    {tag_ids, post_params} = Map.pop(post_params, "tags", [])
+    post_tags = Enum.map(tag_ids, &Tags.get_tag!/1)
+    tags = Tags.list_tags()
+
+    case Posts.create_post(post_params, post_tags) do
       {:ok, post} ->
         conn
         |> put_flash(:info, "Post created successfully.")
         |> redirect(to: Routes.post_path(conn, :show, post))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, tags: tags)
     end
   end
 
@@ -66,7 +66,6 @@ defmodule BlogWeb.PostController do
     changeset = Comments.change_comment(%Comment{})
 
     post = Posts.get_post!(id)
-    IO.inspect(post)
 
     render(conn, "show.html", post: post, changeset: changeset)
   end
@@ -87,7 +86,6 @@ defmodule BlogWeb.PostController do
   end
 
   def update(conn, %{"id" => id, "post" => post_params}) do
-    IO.inspect("WTH?", label: "*****************************")
     post = Posts.get_post!(id)
 
     tags =
@@ -102,7 +100,7 @@ defmodule BlogWeb.PostController do
         |> redirect(to: Routes.post_path(conn, :show, post))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", post: post, changeset: changeset)
+        render(conn, "edit.html", post: post, changeset: changeset, tags: tags)
     end
   end
 

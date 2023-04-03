@@ -15,7 +15,7 @@ defmodule BlogWeb.PostControllerTest do
     title: "some updated title",
     tags: []
   }
-  @invalid_attrs %{content: nil, title: nil, visible: nil, tags: nil}
+  @invalid_attrs %{content: nil, title: nil, visible: nil, tags: []}
 
   describe "index" do
     test "lists all posts", %{conn: conn} do
@@ -95,8 +95,12 @@ defmodule BlogWeb.PostControllerTest do
     setup [:create_post]
 
     test "deletes chosen post", %{conn: conn, post: post} do
-      post = post_fixture()
-      conn = conn |> log_in_user(user_fixture())
+      user = user_fixture()
+      post = post_fixture(user_id: user.id)
+
+      conn =
+        conn
+        |> log_in_user(user)
 
       conn = delete(conn, Routes.post_path(conn, :delete, post))
       assert redirected_to(conn) == Routes.post_path(conn, :index)

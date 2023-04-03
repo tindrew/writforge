@@ -78,8 +78,6 @@ defmodule Blog.Posts do
 
   """
   def create_post(attrs \\ %{}, tags \\ []) do
-    IO.inspect(attrs)
-
     %Post{}
     |> Post.changeset(attrs, tags)
     |> Repo.insert()
