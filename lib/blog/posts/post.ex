@@ -14,6 +14,7 @@ defmodule Blog.Posts.Post do
     field :visible, :boolean
 
     has_many :comments, Blog.Comments.Comment, on_delete: :delete_all
+
     many_to_many :tags, Blog.Tags.Tag, join_through: "post_tags", on_replace: :delete
 
     belongs_to :user, Blog.Accounts.User
@@ -24,9 +25,10 @@ defmodule Blog.Posts.Post do
   @required [:content, :title, :published_on, :visible]
   @allowed [:user_id]
   @doc false
-  def changeset(post, attrs) do
+  def changeset(post, attrs, tags) do
     post
     |> cast(attrs, @required ++ @allowed)
+    |> put_assoc(:tags, tags)
     |> validate_required(@required)
   end
 end

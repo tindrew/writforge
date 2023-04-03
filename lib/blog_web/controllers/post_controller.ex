@@ -7,6 +7,10 @@ defmodule BlogWeb.PostController do
   # alias Floki.HTMLTree.Comment
   alias Blog.Posts
   alias Blog.Posts.Post
+  # alias Blog.Tags.Tag
+  alias Blog.Tags
+
+  plug :require_user_owns_post when action in [:edit, :update, :delete]
 
   def index(conn, %{"title" => title}) do
     posts = Posts.list_posts(title: title)
@@ -21,20 +25,26 @@ defmodule BlogWeb.PostController do
   def new(conn, _params) do
     changeset = Posts.change_post(%Post{})
 
-    render(conn, "new.html", changeset: changeset)
+    tags = Tags.list_tags()
+
+    render(conn, "new.html", changeset: changeset, tags: tags)
   end
 
   def create(conn, %{"post" => post_params}) do
     post_params = Map.put(post_params, "user_id", conn.assigns[:current_user].id)
 
-    case Posts.create_post(post_params) do
+    {tag_ids, post_params} = Map.pop(post_params, "tags", [])
+    post_tags = Enum.map(tag_ids, &Tags.get_tag!/1)
+    tags = Tags.list_tags()
+
+    case Posts.create_post(post_params, post_tags) do
       {:ok, post} ->
         conn
         |> put_flash(:info, "Post created successfully.")
         |> redirect(to: Routes.post_path(conn, :show, post))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, tags: tags)
     end
   end
 
@@ -61,22 +71,36 @@ defmodule BlogWeb.PostController do
   end
 
   def edit(conn, %{"id" => id}) do
+    tags = Tags.list_tags()
+
     post = Posts.get_post!(id)
+
     changeset = Posts.change_post(post)
-    render(conn, "edit.html", post: post, changeset: changeset)
+
+    tag_ids =
+      Enum.map(post.tags, fn tag ->
+        tag.id
+      end)
+
+    render(conn, "edit.html", changeset: changeset, post: post, tags: tags, tag_ids: tag_ids)
   end
 
   def update(conn, %{"id" => id, "post" => post_params}) do
     post = Posts.get_post!(id)
 
-    case Posts.update_post(post, post_params) do
+    tags =
+      Enum.map(post_params["tags"], fn tag_id ->
+        Tags.get_tag!(tag_id)
+      end)
+
+    case Posts.update_post(post, post_params, tags) do
       {:ok, post} ->
         conn
         |> put_flash(:info, "Post updated successfully.")
         |> redirect(to: Routes.post_path(conn, :show, post))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", post: post, changeset: changeset)
+        render(conn, "edit.html", post: post, changeset: changeset, tags: tags)
     end
   end
 
@@ -89,12 +113,12 @@ defmodule BlogWeb.PostController do
     |> redirect(to: Routes.post_path(conn, :index))
   end
 
-  plug :require_user_owns_post when action in [:edit, :update, :delete]
-
   def require_user_owns_post(conn, _opts) do
+
     post =
       String.to_integer(conn.path_params["id"])
       |> Posts.get_post!()
+
 
     if conn.assigns[:current_user].id == post.user_id do
       conn

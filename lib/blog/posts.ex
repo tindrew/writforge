@@ -20,13 +20,12 @@ defmodule Blog.Posts do
 
   """
 
-
   def list_posts(user_id) when user_id == true do
     Post
     |> where([post], post.user_id == ^user_id)
     |> Repo.all()
+    |> Repo.preload([:tags])
   end
-
 
   def list_posts(filters) do
     post_title = "%#{filters[:title]}%"
@@ -36,15 +35,14 @@ defmodule Blog.Posts do
         where: ilike(p.title, ^post_title) or ilike(p.content, ^post_title)
 
     Repo.all(query)
+    |> Repo.preload([:tags])
   end
-
-
 
   def list_posts() do
     Post
     |> Repo.all()
+    |> Repo.preload([:tags])
   end
-
 
   @doc """
   Gets a single post.
@@ -62,7 +60,9 @@ defmodule Blog.Posts do
   """
   def get_post!(id) do
     Repo.get!(Post, id)
-    |> Repo.preload([:comments])
+    |> Repo.preload([:comments, :tags])
+
+    # |> Repo.preload([:tags])
   end
 
   @doc """
@@ -77,9 +77,9 @@ defmodule Blog.Posts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_post(attrs \\ %{}) do
+  def create_post(attrs \\ %{}, tags \\ []) do
     %Post{}
-    |> Post.changeset(attrs)
+    |> Post.changeset(attrs, tags)
     |> Repo.insert()
   end
 
@@ -95,9 +95,9 @@ defmodule Blog.Posts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_post(%Post{} = post, attrs) do
+  def update_post(%Post{} = post, attrs, tags \\ []) do
     post
-    |> Post.changeset(attrs)
+    |> Post.changeset(attrs, tags)
     |> Repo.update()
   end
 
@@ -126,7 +126,7 @@ defmodule Blog.Posts do
       %Ecto.Changeset{data: %Post{}}
 
   """
-  def change_post(%Post{} = post, attrs \\ %{}) do
-    Post.changeset(post, attrs)
+  def change_post(%Post{} = post, attrs \\ %{}, tags \\ []) do
+    Post.changeset(post, attrs, tags)
   end
 end

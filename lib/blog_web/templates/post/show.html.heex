@@ -22,24 +22,25 @@
     <strong>Visible:</strong>
     <%= @post.visible %>
   </li>
+
+  <li class="font-bold ">
+    <strong>Tags:</strong>
+    <%= for tag <- @post.tags, do: tag.name %>
+  </li>
+
 </ul>
 
 <ul>
   <strong>COMMENTS:</strong>
-  <%= for comment <- @post.comments do %>
-
   <li>
-    <%= comment.content %>
+    <%= for comment <- @post.comments, do: comment.content %>
   </li>
-
-    <% end %>
 </ul>
 
 <span><%= link "Edit", to: Routes.post_path(@conn, :edit, @post) %></span> |
 <span><%= link "Back", to: Routes.post_path(@conn, :index) %></span>
 
 <.form let={f} for={@changeset} action={Routes.post_path(@conn, :create_comment, @post.id)}>
-    <% IO.inspect(@changeset) %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
       <p>Oops, something went wrong! Please check the errors below.</p>
