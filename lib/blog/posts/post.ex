@@ -8,9 +8,14 @@ defmodule Blog.Posts.Post do
   schema "posts" do
     field :content, :string
     field :title, :string
+
     field :published_on, :utc_datetime, default: DateTime.utc_now() |> DateTime.truncate(:second)
+
     field :visible, :boolean
-    has_many :comments, Blog.Comments.Comment
+
+    has_many :comments, Blog.Comments.Comment, on_delete: :delete_all
+    many_to_many :tags, Blog.Tags.Tag, join_through: "post_tags", on_replace: :delete
+
     belongs_to :user, Blog.Accounts.User
 
     timestamps()
