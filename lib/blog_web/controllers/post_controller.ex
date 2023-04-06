@@ -114,11 +114,9 @@ defmodule BlogWeb.PostController do
   end
 
   def require_user_owns_post(conn, _opts) do
-
     post =
       String.to_integer(conn.path_params["id"])
       |> Posts.get_post!()
-
 
     if conn.assigns[:current_user].id == post.user_id do
       conn

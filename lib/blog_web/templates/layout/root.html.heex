@@ -9,8 +9,8 @@
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
-  <body class="min-h-screen flex flex-col">
-    <header class="flex-grow">
+  <body class="absolute flex flex-col min-h-screen w-full">
+    <header class="">
       <section>
         <nav class="flex justify-around py-4 bg-gray-600 ">
           <logo class="flex  object-cover">
@@ -20,7 +20,7 @@
 
 
 
-          
+
           <nav-links class="flex">
             <Components.link href={Routes.page_path(@conn, :index)}>Home</Components.link>
             <Components.link href="/posts">Posts</Components.link>
@@ -37,16 +37,9 @@
       </section>
     </header>
     <%= @inner_content %>
-    <footer class="w-full h-20 bg-gray-200 mt-auto">
+
+    <footer class="absolute bottom-0 w-full h-20  bg-gray-200">
       <p>Some realy interesting info</p>
     </footer>
   </body>
 </html>
-
-<!--Base
-<a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
-            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-              <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
-            <% end %>
-          </ul>
-          -->
