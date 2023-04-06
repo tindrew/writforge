@@ -1,62 +1,63 @@
-<section class="grid relative px-20 bg-white">
-  <pg-header class="grid grid-col-12 h-36 bg-red-500">
-    <h1 class="text-6xl font-bold h- mt-10">Listing Posts</h1>
-    <div class="relative grid grid-col-3 grid-rows-2 col-start-12 col-end-13 py-5 bg-green-500">
-      <new-div class="absolute right-0 first-line:col-start-3 col-end-4 rounded-full bg-gray-200 w-24 h-8 mb-5 py-1 px-3">
-        <%= link "New Post", to: Routes.post_path(@conn, :new), class: "w-24" %>
-      </new-div>
+<div class="flex justify-center w-full items-top">
 
-      <form class="absolute right-0 bottom-10 col-start-2 col-end-4  h-10">
-        <.form let={f} for={@conn} method={"get"} action={Routes.post_path(@conn, :index)}>
-            <%= search_input f, :title, placeholder: "search", class: "flex flex-col h-8" %>
-            <%= error_tag f, :title %>
 
-            <div class="absolute right-2 top-10 justify-self-end">
-              <%= submit "Search" %>
-            </div>
-          </.form>
+  <section class="mt-0 grid relative  bg-white">
+    <pg-header class="grid grid-col-12 h-36 bg-red-500">
+      <h1 class="text-6xl font-bold h- mt-10">Listing Posts</h1>
+      <div class="relative grid grid-col-3 grid-rows-2 col-start-12 col-end-13 py-5 bg-green-500">
+        <new-div class="absolute right-0 first-line:col-start-3 col-end-4 rounded-full bg-gray-200 w-24 h-8 mb-5 py-1 px-3">
+          <%= link "New Post", to: Routes.post_path(@conn, :new), class: "w-24" %>
+        </new-div>
 
-      </form>
-    </div>
-  </pg-header>
+        <form class="absolute right-0 bottom-10 col-start-2 col-end-4  h-10">
+          <.form let={f} for={@conn} method={"get"} action={Routes.post_path(@conn, :index)}>
+              <%= search_input f, :title, placeholder: "search", class: "flex flex-col h-8" %>
+              <%= error_tag f, :title %>
 
-  <!--div class="relative bg-cover bg-no-repeat bg-right opacity-50 h-96 w-1/4 rounded-lg shadow-lg overflow-hidden bg- text-center" style="background-image: url('/images/typewriter-brown.jpg')"-->
-
-  <card-grid-div class="grid lg:grid-cols-3 gap-10 px-20">
-    <%= for post <- @posts do %>
-      <card-div class="bg-gray-200 h-96 w-full rounded-lg shadow-lg overflow-hidden">
-        <!--header class="flex justify-between h-20 w-full"-->
-        <header class="grid grid-col-6 gap-1 bg-slate-500 p-2">
-          <div class="col-start-1 col-end-4">
-            <div class="flex flex-col font-bold text-xl ">
-              <div class="text-4xl">
-                <%= post.title %><br>
+              <div class="absolute right-2 top-10 justify-self-end">
+                <%= submit "Search" %>
               </div>
-              <div class="font-semibold text-xl">
-                <span class="text-sm font-light">
-                <%= Calendar.strftime(post.published_on, "%B %-d, %Y") %>
-                </span>
-              </div>
-              <div class="font-light text-sm "></div>
-            </div>
-          </div>
-          <div class="col-start-5 col-end-6 flex justify-end">
+            </.form>
 
-          </div>
-        </header>
-        <article class="flex justify-left relative text-slate-500   scroll" >
-          <div class="absolute">
-            <div class="flex justify-center px-5 pt-5 h-full whitespace-pre-wrap">
-              <%= post.content %>
+        </form>
+      </div>
+    </pg-header>
+    <card-grid-div class="grid lg:grid-cols-3 gap-10">
+      <%= for post <- @posts do %>
+        <card-div class="bg-gray-200 h-96 w-full rounded-lg shadow-lg overflow-hidden">
+          <!--header class="flex justify-between h-20 w-full"-->
+          <header class="grid grid-col-6 gap-1 bg-slate-500 p-2">
+            <div class="col-start-1 col-end-4">
+              <div class="flex flex-col font-bold text-xl ">
+                <div class="text-4xl">
+                  <%= post.title %><br>
+                </div>
+                <div class="font-semibold text-xl">
+                  <span class="text-sm font-light">
+                  <%= Calendar.strftime(post.published_on, "%B %-d, %Y") %>
+                  </span>
+                </div>
+                <div class="font-light text-sm "></div>
+              </div>
             </div>
-          </div>
-        </article>
-        <card-footer class="flex relative bg-gray-200 text-gray-900  h-20 w-full p-2">
-          <span class="p-1 hover:text-gray-600"><%= link "Show", to: Routes.post_path(@conn, :show, post) %></span>
-          <span class="p-1 hover:text-gray-600"><%= link "Edit", to: Routes.post_path(@conn, :edit, post) %></span>
-          <span class="p-1 hover:text-red-600"><%= link "Delete", to: Routes.post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"] %></span>
-        </card-footer>
-      </card-div>
-    <% end %>
-  </card-grid-div>
-</section>
+            <div class="col-start-5 col-end-6 flex justify-end">
+
+            </div>
+          </header>
+          <article class="flex justify-left relative text-slate-500   scroll" >
+            <div class="absolute">
+              <div class="flex justify-center px-5 pt-5 h-full whitespace-pre-wrap">
+                <%= post.content %>
+              </div>
+            </div>
+          </article>
+          <card-footer class="flex relative bg-gray-200 text-gray-900  h-20 w-full p-2">
+            <span class="p-1 hover:text-gray-600"><%= link "Show", to: Routes.post_path(@conn, :show, post) %></span>
+            <span class="p-1 hover:text-gray-600"><%= link "Edit", to: Routes.post_path(@conn, :edit, post) %></span>
+            <span class="p-1 hover:text-red-600"><%= link "Delete", to: Routes.post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"] %></span>
+          </card-footer>
+        </card-div>
+      <% end %>
+    </card-grid-div>
+  </section>
+</div>
