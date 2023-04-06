@@ -1,9 +1,11 @@
-<h1>Show Post</h1>
+<div class="flex justify-center items-center h-screen">
+  <div class="max-w-xl bg-white shadow-md rounded-md p-8 space-y-6">
+<h1 class="text-3xl font-bold mb-4">Show Post</h1>
 
-<ul>
+<ul class="space-y-2 mb-8">
 
   <li>
-    <strong>Title:</strong>
+    <strong class="text-3xl font-bold mb-4">Title:</strong>
     <%= @post.title %>
   </li>
 
@@ -32,13 +34,18 @@
 
 <ul>
   <strong>COMMENTS:</strong>
-  <li>
+  <li class="bg-gray-200 rounded-full py-1 px-2 text-gray-700">
     <%= for comment <- @post.comments, do: comment.content %>
   </li>
 </ul>
 
-<span><%= link "Edit", to: Routes.post_path(@conn, :edit, @post) %></span> |
-<span><%= link "Back", to: Routes.post_path(@conn, :index) %></span>
+<div class="flex space-x-2 mb-8">
+<span class="inline-flex rounded-md shadow-sm"><%= link "Edit", to: Routes.post_path(@conn, :edit, @post), class: "inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition ease-in-out duration-150"  %></span> |
+<span class="inline-flex rounded-md shadow-sm"><%= link "Back", to: Routes.post_path(@conn, :index), class: "inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-gray-600 hover:bg-gray-500 focus:outline-none focus:border-gray-700 focus:shadow-outline-gray active:bg-gray-700 transition ease-in-out duration-150" %></span>
+</div>
+
+<div class="mb-8">
+    <h2 class="text-2xl font-bold mb-4">Add Comment</h2>
 
 <.form let={f} for={@changeset} action={Routes.post_path(@conn, :create_comment, @post.id)}>
   <%= if @changeset.action do %>
@@ -46,13 +53,16 @@
       <p>Oops, something went wrong! Please check the errors below.</p>
     </div>
   <% end %>
-
-  <%= label f, :comment %>
-  <%= text_input f, :content %>
+  <div class="mb-4">
+  <%= label f, :comment, class: "block text-gray-700 font-bold mb-2" %>
+  <%= text_input f, :content, class: "form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50", placeholder: "Enter your comment here", rows: 5 %>
   <%= error_tag f, :content %>
+  </div>
 
-
-  <div>
-    <%= submit "Save" %>
+  <div class="flex justify-end">
+    <%= submit "Save", class: "inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150" %>
   </div>
 </.form>
+</div>
+</div>
+</div>
