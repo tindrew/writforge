@@ -30,6 +30,7 @@ defmodule BlogWeb.Router do
 
     get "/", PageController, :index
 
+    # get "/posts", PostController, :obfuscate
     resources "/posts", PostController, only: [:index, :show]
   end
 

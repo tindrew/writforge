@@ -1,63 +1,65 @@
-<div class="flex justify-center w-full items-top">
+<section class="mt-0 mx-5 grid relative bg-white scroll-auto">
+  <pg-header class="grid grid-col-12 h-36">
+    <h1 class="text-6xl font-bold h- mt-10">Listing Posts</h1>
+    <nav-div class="relative grid grid-col-3 grid-rows-2 col-start-9 col-end-13 py-5">
+      <!--buttons-div class="relative grid justify-around right-0 my-2 bg-cyan-500"-->
+        <button class="absolute first-line:col-start-1 col-end-2 sm:px-8 rounded my-2 px-4 py-2 bg-gray-300 hover:bg-gray-500 transition-all duration-300 w-36 right-40">
+          Obfuscate
+        </button>
+        <button class="absolute first-line:col-start-3 col-end-4 sm:px-8 rounded my-2 px-4 py-2 bg-gray-300 hover:bg-gray-500 transition-all duration-300 w-36 right-0">
+          <%= link "New Post", to: Routes.post_path(@conn, :new), class: "" %>
+        </button>
+      <!--/buttons-div-->
 
+      <form class="absolute right-0 bottom-10 col-start-2 col-end-4 h-10">
+        <.form let={f} for={@conn} method={"get"} action={Routes.post_path(@conn, :index)}>
+            <%= search_input f, :title, placeholder: "search", class: "flex flex-col h-8" %>
+            <%= error_tag f, :title %>
 
-  <section class="mt-0 grid relative  bg-white">
-    <pg-header class="grid grid-col-12 h-36 bg-red-500">
-      <h1 class="text-6xl font-bold h- mt-10">Listing Posts</h1>
-      <div class="relative grid grid-col-3 grid-rows-2 col-start-12 col-end-13 py-5 bg-green-500">
-        <new-div class="absolute right-0 first-line:col-start-3 col-end-4 rounded-full bg-gray-200 w-24 h-8 mb-5 py-1 px-3">
-          <%= link "New Post", to: Routes.post_path(@conn, :new), class: "w-24" %>
-        </new-div>
-
-        <form class="absolute right-0 bottom-10 col-start-2 col-end-4  h-10">
-          <.form let={f} for={@conn} method={"get"} action={Routes.post_path(@conn, :index)}>
-              <%= search_input f, :title, placeholder: "search", class: "flex flex-col h-8" %>
-              <%= error_tag f, :title %>
-
-              <div class="absolute right-2 top-10 justify-self-end">
-                <%= submit "Search" %>
-              </div>
-            </.form>
-
-        </form>
-      </div>
-    </pg-header>
-    <card-grid-div class="grid lg:grid-cols-3 gap-10">
-      <%= for post <- @posts do %>
-        <card-div class="bg-gray-200 h-96 w-full rounded-lg shadow-lg overflow-hidden">
-          <!--header class="flex justify-between h-20 w-full"-->
-          <header class="grid grid-col-6 gap-1 bg-slate-500 p-2">
-            <div class="col-start-1 col-end-4">
-              <div class="flex flex-col font-bold text-xl ">
-                <div class="text-4xl">
-                  <%= post.title %><br>
-                </div>
-                <div class="font-semibold text-xl">
-                  <span class="text-sm font-light">
-                  <%= Calendar.strftime(post.published_on, "%B %-d, %Y") %>
-                  </span>
-                </div>
-                <div class="font-light text-sm "></div>
-              </div>
+            <div class="absolute right-0 top-10 justify-self-end sm:px-8 rounded px-4 py-2 bg-gray-300 hover:bg-gray-500 transition-all duration-300">
+              <%= submit "Search" %>
             </div>
-            <div class="col-start-5 col-end-6 flex justify-end">
+          </.form>
 
-            </div>
-          </header>
-          <article class="flex justify-left relative text-slate-500   scroll" >
-            <div class="absolute">
-              <div class="flex justify-center px-5 pt-5 h-full whitespace-pre-wrap">
-                <%= post.content %>
+      </form>
+    </nav-div>
+  </pg-header>
+  <card-grid-div class="grid lg:grid-cols-3 gap-10 my-3 grid-rows-[auto, 1fr, auto]">
+    <%= for post <- @posts do %>
+      <%#= BlogWeb.PostView.obfuscate(post) %>
+      <card-div class="bg-gray-200 h-96 w-full rounded-lg shadow-lg overflow-hidden">
+        <!--header class="flex justify-between h-20 w-full"-->
+        <header class="grid grid-col-6 gap-1 bg-slate-500 p-2">
+          <div class="col-start-1 col-end-4">
+            <div class="flex flex-col font-bold text-xl ">
+              <div class="text-4xl">
+                <%= raw(BlogWeb.PostView.obfuscate(post.title)) %><br>
               </div>
+              <div class="font-semibold text-xl">
+                <span class="text-sm font-light">
+                <%= Calendar.strftime(post.published_on, "%B %-d, %Y") %>
+                </span>
+              </div>
+              <div class="font-light text-sm "></div>
             </div>
-          </article>
-          <card-footer class="flex relative bg-gray-200 text-gray-900  h-20 w-full p-2">
-            <span class="p-1 hover:text-gray-600"><%= link "Show", to: Routes.post_path(@conn, :show, post) %></span>
-            <span class="p-1 hover:text-gray-600"><%= link "Edit", to: Routes.post_path(@conn, :edit, post) %></span>
-            <span class="p-1 hover:text-red-600"><%= link "Delete", to: Routes.post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"] %></span>
-          </card-footer>
-        </card-div>
-      <% end %>
-    </card-grid-div>
-  </section>
-</div>
+          </div>
+          <div class="col-start-5 col-end-6 flex justify-end">
+
+          </div>
+        </header>
+        <card-body class="flex justify-left relative text-slate-500 scroll m" >
+          <div class="absolute">
+            <div class="flex justify-center px-5 pt-5 h-full whitespace-pre-wrap">
+              <%= raw(BlogWeb.PostView.obfuscate(post.content)) %>
+            </div>
+          </div>
+        </card-body>
+        <card-footer class="flex relative bg-gray-200 text-gray-900  h-20 w-full p-2">
+          <span class="p-1 hover:text-gray-600"><%= link "Show", to: Routes.post_path(@conn, :show, post) %></span>
+          <span class="p-1 hover:text-gray-600"><%= link "Edit", to: Routes.post_path(@conn, :edit, post) %></span>
+          <span class="p-1 hover:text-red-600"><%= link "Delete", to: Routes.post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"] %></span>
+        </card-footer>
+      </card-div>
+    <% end %>
+  </card-grid-div>
+</section>
