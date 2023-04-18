@@ -10,35 +10,27 @@
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
   <body class="absolute flex flex-col min-h-screen w-full">
-    <header class="">
-      <section>
-        <nav class="flex justify-around py-4 bg-gray-600 ">
+    <header class=" bg-gray-600">
+      <section class="mx-5 ">
+        <nav class="flex justify-between py-4">
           <logo class="flex  object-cover">
            <a href={Routes.page_path(@conn, :index)}> <img src={Routes.static_path(@conn, "/images/writforge.png")} class="h-14 object-cover " alt="writforge logo"/></a>
           </logo>
-
-
-
-
-
-          <nav-links class="flex">
+          <nav-links class="flex ">
             <Components.link href={Routes.page_path(@conn, :index)}>Home</Components.link>
             <Components.link href="/posts">Posts</Components.link>
             <Components.link href="/about">About</Components.link>
 
-            <%= render "_user_menu.html", assigns %>
-
-
-            <%!-- <Components.link href="/log_in">Log In</Components.link> --%>
-
+            <auth-links class="flex flex-col ml-3 text-slate-300">
+              <%= render "_user_menu.html", assigns %>
+            </auth-links>
           </nav-links>
-
         </nav>
       </section>
     </header>
     <%= @inner_content %>
 
-    <footer class="absolute bottom-0 w-full h-20  bg-gray-200">
+    <footer class="absolute bottom-0 w-full h-20 bg-gray-200">
       <p>Some realy interesting info</p>
     </footer>
   </body>

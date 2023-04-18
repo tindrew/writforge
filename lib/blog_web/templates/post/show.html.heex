@@ -6,7 +6,7 @@
 
   <li>
     <strong class="text-3xl font-bold mb-4">Title:</strong>
-    <%= @post.title %>
+    <%= raw(BlogWeb.PostView.obfuscate(@post.title)) %>
   </li>
 
   <li>
@@ -16,7 +16,7 @@
 
   <li>
     <strong>Content:</strong>
-    <%= assigns.post.content %>
+    <%= raw(BlogWeb.PostView.obfuscate(@post.content)) %>
 
   </li>
 
